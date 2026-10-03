@@ -1,0 +1,972 @@
+@import url('./css/architecture.css');
+@import url('./css/cyrus-polish.css');
+
+/* Shared glass theme primitives. Screen-specific composition belongs in the
+ * page bundle so unrelated screens do not inherit accidental overrides. */
+/* CYRUS SHOP — Aurora Glass theme
+   A single visual layer shared by the storefront, account screens and admin UI. */
+
+:root {
+  --glass-bg: #080617;
+  --glass-bg-2: #100a24;
+  --glass-panel: rgba(24, 18, 52, 0.68);
+  --glass-panel-strong: rgba(31, 23, 68, 0.86);
+  --glass-line: rgba(224, 210, 255, 0.16);
+  --glass-line-strong: rgba(207, 173, 255, 0.34);
+  --glass-text: #f8f5ff;
+  --glass-muted: #aaa4c4;
+  --glass-purple: #9b6cff;
+  --glass-pink: #ed78ff;
+  --glass-cyan: #7de9ff;
+  --glass-shadow: 0 24px 70px rgba(0, 0, 0, .36);
+}
+
+html {
+  background: var(--glass-bg) !important;
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 8%, rgba(133, 79, 255, .20), transparent 28%),
+    radial-gradient(circle at 92% 12%, rgba(236, 100, 255, .14), transparent 25%),
+    linear-gradient(135deg, var(--glass-bg), var(--glass-bg-2) 54%, #160a2a) !important;
+  color: var(--glass-text) !important;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(4px);
+}
+
+body::before {
+	  inset: 0;
+	  width: auto;
+	  height: auto;
+	  background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px), radial-gradient(circle at 82% 14%, rgba(219, 109, 255, .20), transparent 28%);
+	  background-size: 44px 44px, 44px 44px, auto;
+	  mask-image: linear-gradient(to bottom, #000, transparent 82%);
+}
+
+body::after {
+	  inset: -20%;
+	  width: auto;
+	  height: auto;
+	  border-radius: 0;
+	  background-image: radial-gradient(circle, rgba(255,255,255,.72) 0 1px, transparent 1.5px), radial-gradient(circle, rgba(95, 113, 255, .5) 0 1px, transparent 1.5px);
+	  background-size: 92px 118px, 137px 161px;
+	  background-position: 12px 24px, 64px 80px;
+	  opacity: .32;
+	  animation: glass-particle-drift 28s linear infinite;
+}
+
+@keyframes glass-particle-drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-48px,-72px,0); } }
+
+/* Shared navigation */
+.topbar {
+  background: rgba(17, 12, 38, .74) !important;
+  border-bottom: 1px solid var(--glass-line) !important;
+  box-shadow: 0 10px 35px rgba(4, 1, 18, .24) !important;
+  backdrop-filter: blur(22px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+.logo-inline,
+.sidebar-logo-text {
+  background: linear-gradient(110deg, #fff, #d9c4ff 48%, var(--glass-pink)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.hamburger,
+.notif-btn,
+.avatar-btn {
+  color: var(--glass-text) !important;
+}
+
+.hamburger:hover,
+.notif-btn:hover {
+  background: rgba(174, 126, 255, .16) !important;
+}
+
+.avatar-btn,
+.sidebar-logo-icon {
+  background:
+    linear-gradient(135deg, rgba(155, 108, 255, .28), rgba(237, 120, 255, .22)),
+    url('/assets/anime-hero.jpg') center 22% / cover !important;
+  border: 1px solid rgba(255, 255, 255, .34) !important;
+  box-shadow: 0 0 0 3px rgba(155, 108, 255, .12), 0 8px 24px rgba(105, 58, 220, .28) !important;
+}
+
+.sidebar {
+  background:
+    linear-gradient(180deg, rgba(22, 16, 49, .94), rgba(12, 8, 28, .92)) !important;
+  border-right: 1px solid var(--glass-line-strong) !important;
+  box-shadow: 20px 0 60px rgba(3, 0, 15, .34) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+}
+
+.sidebar-header,
+.sidebar-user,
+.sidebar-footer {
+  border-color: var(--glass-line) !important;
+}
+
+.sidebar-header {
+  padding-top: 28px !important;
+}
+
+.sidebar-logo-icon {
+  overflow: hidden;
+}
+
+.sidebar-logo-icon svg {
+  opacity: 0 !important;
+}
+
+.sidebar-user {
+  margin: 12px 14px !important;
+  padding: 16px !important;
+  border: 1px solid var(--glass-line) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(135deg, rgba(155, 108, 255, .15), rgba(255, 255, 255, .035)) !important;
+  transition: border-color .25s ease, transform .25s ease;
+}
+
+.sidebar-user:hover {
+  border-color: rgba(201, 163, 255, .4) !important;
+  transform: translateY(-1px);
+}
+
+.sidebar.open {
+  animation: cyrusSidebarGlow .32s ease-out;
+}
+
+@keyframes cyrusSidebarGlow {
+  from { box-shadow: 20px 0 60px rgba(3, 0, 15, .1); }
+  to   { box-shadow: 20px 0 60px rgba(3, 0, 15, .34); }
+}
+
+.sidebar-user-name,
+.sidebar-user-email {
+  color: var(--glass-text) !important;
+}
+
+.sidebar-user-email,
+.nav-section,
+.nav-item,
+.theme-toggle {
+  color: var(--glass-muted) !important;
+}
+
+.sidebar-points {
+  color: #e5c6ff !important;
+  background: rgba(155, 108, 255, .17) !important;
+  border-color: rgba(201, 163, 255, .3) !important;
+}
+
+.nav-item {
+  margin: 4px 12px !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  border-left: 0 !important;
+  transition: background .2s ease, color .2s ease, transform .2s ease !important;
+}
+
+.nav-item:hover {
+  color: #fff !important;
+  background: rgba(155, 108, 255, .12) !important;
+  transform: translateX(3px);
+}
+
+.nav-item.active {
+  color: #fff !important;
+  background: linear-gradient(100deg, rgba(155, 108, 255, .28), rgba(237, 120, 255, .10)) !important;
+  box-shadow: inset 0 0 0 1px rgba(209, 178, 255, .22), 0 8px 22px rgba(82, 42, 168, .15) !important;
+}
+
+.nav-item.active::before {
+  left: 0 !important;
+  right: auto !important;
+  width: 3px !important;
+  background: linear-gradient(180deg, var(--glass-cyan), var(--glass-pink)) !important;
+  box-shadow: 0 0 14px rgba(237, 120, 255, .75) !important;
+}
+
+.theme-toggle:hover {
+  color: #fff !important;
+  background: rgba(155, 108, 255, .10) !important;
+}
+
+.toggle-switch {
+  background: rgba(255, 255, 255, .13) !important;
+}
+
+[data-theme="light"] .toggle-switch {
+  background: linear-gradient(90deg, var(--glass-purple), var(--glass-pink)) !important;
+}
+
+.logout-btn {
+  color: #ff9cb9 !important;
+  border-radius: 13px !important;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 93, 146, .12) !important;
+}
+
+.main-content {
+  background: transparent !important;
+}
+
+.page-container {
+  max-width: 1240px !important;
+}
+
+.card,
+.card-sm {
+  background: linear-gradient(135deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .035)) !important;
+  border: 1px solid var(--glass-line) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(18px) saturate(130%) !important;
+}
+
+.btn-accent,
+.btn-primary,
+.btn-success {
+  background: linear-gradient(110deg, #7651ed, #bd72ee 55%, #f188d6) !important;
+  box-shadow: 0 10px 28px rgba(135, 84, 238, .28) !important;
+}
+
+.btn-accent:hover,
+.btn-primary:hover {
+  box-shadow: 0 14px 36px rgba(179, 92, 244, .38) !important;
+}
+
+.btn-outline {
+  border-color: var(--glass-line-strong) !important;
+  color: var(--glass-text) !important;
+  background: rgba(255, 255, 255, .04) !important;
+}
+
+.btn-outline:hover {
+  border-color: var(--glass-pink) !important;
+  background: rgba(155, 108, 255, .12) !important;
+}
+
+.toast {
+  background: rgba(28, 19, 58, .88) !important;
+  border-color: var(--glass-line-strong) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+/* Login and registration */
+body:has(.auth-shell),
+body:has(.register-card) {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.auth-shell,
+.register-card {
+  background: rgba(20, 14, 46, .65) !important;
+  border: 1px solid rgba(222, 195, 255, .25) !important;
+  box-shadow: 0 30px 100px rgba(4, 0, 20, .55), 0 0 70px rgba(155, 108, 255, .13) !important;
+  backdrop-filter: blur(28px) saturate(135%) !important;
+}
+
+.brand-panel {
+  background:
+    linear-gradient(180deg, rgba(21, 12, 49, .58), rgba(8, 4, 24, .90)),
+    url('/assets/anime-hero.jpg') center / cover !important;
+}
+
+.brand-panel::before {
+  background:
+    linear-gradient(rgba(196, 135, 255, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196, 135, 255, .055) 1px, transparent 1px) !important;
+  background-size: 34px 34px !important;
+}
+
+.brand-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 28%, rgba(183, 123, 255, .16), transparent 68%);
+  pointer-events: none;
+}
+
+.brand-mark,
+.brand-copy,
+.trust-list {
+  z-index: 2 !important;
+}
+
+.brand-mark-icon,
+.logo-icon {
+  background:
+    linear-gradient(135deg, rgba(155, 108, 255, .18), rgba(237, 120, 255, .18)),
+    url('/assets/anime-hero.jpg') center 18% / cover !important;
+  border-color: rgba(238, 208, 255, .72) !important;
+  box-shadow: 0 0 0 4px rgba(155, 108, 255, .12), 0 10px 28px rgba(95, 48, 205, .3) !important;
+  overflow: hidden;
+  color: transparent !important;
+}
+
+.brand-mark-text,
+.logo-text {
+  background: linear-gradient(110deg, #fff, #dfc7ff, #f5a7f2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.brand-copy h1 em {
+  color: #e8a7ff !important;
+}
+
+.brand-copy p,
+.trust-list li {
+  color: rgba(246, 238, 255, .72) !important;
+}
+
+.trust-list {
+  border-top-color: var(--glass-line) !important;
+}
+
+.trust-list svg {
+  color: var(--glass-cyan) !important;
+}
+
+.login-card {
+  background: rgba(28, 20, 58, .55) !important;
+}
+
+.step-title,
+.register-card h1,
+.login-card h1 {
+  color: #fff !important;
+}
+
+.subtitle,
+.login-link,
+.forgot-link {
+  color: var(--glass-muted) !important;
+}
+
+.login-link a,
+.forgot-link {
+  color: #df9cff !important;
+}
+
+.btn-google,
+.login-card input,
+.register-card input {
+  background: rgba(255, 255, 255, .07) !important;
+  border-color: var(--glass-line-strong) !important;
+  color: #fff !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.btn-google {
+  opacity: .7 !important;
+}
+
+.login-card input:focus,
+.register-card input:focus {
+  background: rgba(255, 255, 255, .12) !important;
+  border-color: #cf9bff !important;
+  box-shadow: 0 0 0 4px rgba(155, 108, 255, .12) !important;
+}
+
+.login-card input::placeholder,
+.register-card input::placeholder {
+  color: rgba(231, 221, 255, .43) !important;
+}
+
+.btn-primary {
+  color: #fff !important;
+}
+
+.step-dot {
+  background: rgba(255, 255, 255, .18) !important;
+}
+
+.step-dot.active {
+  background: linear-gradient(90deg, var(--glass-cyan), var(--glass-pink)) !important;
+}
+
+/* Storefront home */
+body:has(.bottom-nav) {
+  background:
+    radial-gradient(circle at 14% 14%, rgba(117, 75, 255, .18), transparent 29%),
+    radial-gradient(circle at 90% 18%, rgba(232, 100, 255, .13), transparent 26%),
+    linear-gradient(145deg, #080617, #120a2a 62%, #1b0b32) !important;
+}
+
+body:has(.bottom-nav) .topbar {
+  background: rgba(14, 9, 32, .72) !important;
+  border-bottom: 1px solid rgba(219, 185, 255, .18) !important;
+}
+
+.tb-logo {
+  position: relative;
+  padding-left: 46px !important;
+  line-height: 1 !important;
+  background: linear-gradient(110deg, #fff, #d7b9ff, #f29bea) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.tb-logo::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  transform: translateY(-50%);
+  border-radius: 12px;
+  background: url('/assets/anime-hero.jpg') center 20% / cover;
+  border: 1px solid rgba(255, 255, 255, .42);
+  box-shadow: 0 0 18px rgba(184, 116, 255, .46);
+}
+
+.tb-icon-btn {
+  background: rgba(255, 255, 255, .08) !important;
+  border: 1px solid rgba(255, 255, 255, .14) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.tb-icon-btn:hover {
+  background: rgba(180, 124, 255, .22) !important;
+}
+
+.topbar-search {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.search-wrap {
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .16));
+}
+
+.search-input {
+  height: 42px !important;
+  border-radius: 15px !important;
+  background: rgba(255, 255, 255, .10) !important;
+  border: 1px solid rgba(232, 210, 255, .28) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .10) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.search-input::placeholder {
+  color: rgba(235, 225, 255, .58) !important;
+}
+
+.search-wrap::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 23px;
+  height: 23px;
+  transform: translateY(-50%);
+  border-radius: 8px;
+  background: url('/assets/anime-hero.jpg') center 20% / cover;
+  border: 1px solid rgba(255, 255, 255, .45);
+  pointer-events: none;
+  opacity: .9;
+}
+
+.search-btn {
+  height: 42px !important;
+  border-radius: 14px !important;
+  background: linear-gradient(110deg, #8256ed, #d078ec) !important;
+  border: 1px solid rgba(255, 255, 255, .3) !important;
+  box-shadow: 0 10px 24px rgba(130, 79, 230, .28) !important;
+}
+
+.carousel-wrap,
+.notice-bar,
+.user-strip,
+.products-section,
+.support-strip,
+.flash-sale {
+  border: 1px solid rgba(221, 192, 255, .15) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .025)) !important;
+  box-shadow: 0 18px 42px rgba(4, 1, 18, .22) !important;
+  backdrop-filter: blur(18px) saturate(130%) !important;
+}
+
+.carousel-wrap {
+  margin: 14px 12px 12px;
+  border-radius: 24px;
+}
+
+.carousel-gradient {
+  background: linear-gradient(to top, rgba(9, 4, 28, .90), rgba(24, 9, 50, .20) 64%, transparent) !important;
+}
+
+.carousel-tag,
+.notice-label {
+  background: linear-gradient(110deg, #8256ed, #e57ada) !important;
+}
+
+.notice-bar,
+.user-strip,
+.products-section,
+.support-strip,
+.flash-sale {
+  margin-left: 12px;
+  margin-right: 12px;
+  border-radius: 20px;
+}
+
+.notice-bar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.products-section {
+  overflow: hidden;
+}
+
+.products-grid {
+  background: rgba(255, 255, 255, .10) !important;
+}
+
+.prod-card,
+.flash-card {
+  background: rgba(22, 15, 48, .62) !important;
+}
+
+.prod-card:hover,
+.flash-card:hover {
+  background: rgba(107, 67, 173, .25) !important;
+}
+
+.prod-img,
+.flash-card-img {
+  background: rgba(255, 255, 255, .06) !important;
+}
+
+.prod-price,
+.fc-price,
+.section-title .dot {
+  color: #d99aff !important;
+}
+
+.bottom-nav {
+  background: rgba(16, 10, 37, .78) !important;
+  border: 1px solid rgba(222, 193, 255, .20) !important;
+  box-shadow: 0 -12px 35px rgba(5, 1, 21, .28) !important;
+  backdrop-filter: blur(24px) saturate(145%) !important;
+}
+
+.bn-tab.active,
+.bn-tab:hover,
+.bn-center-label {
+  color: #dda1ff !important;
+}
+
+.bn-center-btn {
+  background: linear-gradient(135deg, #8456ef, #eb83df) !important;
+  border-color: rgba(255, 255, 255, .40) !important;
+  box-shadow: 0 8px 26px rgba(155, 90, 234, .42) !important;
+}
+
+.ai-panel,
+.notif-drawer {
+  background: rgba(24, 16, 52, .88) !important;
+  border-color: rgba(221, 192, 255, .22) !important;
+  box-shadow: 0 25px 80px rgba(2, 0, 13, .50) !important;
+  backdrop-filter: blur(26px) saturate(140%) !important;
+}
+
+.ai-fab {
+  background: linear-gradient(135deg, #7a51e8, #e47bdc) !important;
+  box-shadow: 0 12px 32px rgba(129, 74, 228, .42) !important;
+}
+
+/* Secondary storefront screens use the compact "sp-" component names. */
+.sp-topbar {
+  background: rgba(17, 11, 39, .76) !important;
+  border-bottom: 1px solid var(--glass-line) !important;
+  box-shadow: 0 12px 32px rgba(3, 0, 15, .28) !important;
+  backdrop-filter: blur(22px) saturate(145%) !important;
+}
+
+.sp-topbar-back,
+.sp-notif-btn,
+.sp-topbar-avatar {
+  background: rgba(255, 255, 255, .09) !important;
+  border: 1px solid rgba(230, 207, 255, .22) !important;
+  color: #fff !important;
+}
+
+.sp-topbar-back:hover,
+.sp-notif-btn:hover {
+  background: rgba(174, 126, 255, .20) !important;
+}
+
+.sp-topbar-title {
+  color: #fff !important;
+}
+
+.sp-sidebar {
+  background: linear-gradient(180deg, rgba(23, 15, 51, .96), rgba(10, 6, 25, .94)) !important;
+  border-right: 1px solid var(--glass-line-strong) !important;
+  box-shadow: 18px 0 55px rgba(3, 0, 15, .34) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+}
+
+.sp-sidebar-logo,
+.sp-sidebar-user,
+.sp-sidebar-logout {
+  border-color: var(--glass-line) !important;
+}
+
+.sp-sidebar-logo {
+  color: #e5c3ff !important;
+}
+
+.sp-sidebar-user {
+  background: linear-gradient(135deg, rgba(155, 108, 255, .17), rgba(255, 255, 255, .035)) !important;
+  border: 1px solid var(--glass-line) !important;
+  border-radius: 18px !important;
+}
+
+.sp-sidebar-user-pts {
+  background: linear-gradient(110deg, #7651ed, #d078ec) !important;
+}
+
+.sp-sidebar-nav a {
+  margin: 4px 10px !important;
+  border-radius: 13px !important;
+  color: var(--glass-muted) !important;
+}
+
+.sp-sidebar-nav a:hover,
+.sp-sidebar-nav a.active {
+  background: linear-gradient(100deg, rgba(155, 108, 255, .24), rgba(237, 120, 255, .10)) !important;
+  color: #fff !important;
+  border-right: 0 !important;
+  box-shadow: inset 0 0 0 1px rgba(209, 178, 255, .18) !important;
+}
+
+.sp-sidebar-logout button {
+  border-color: var(--glass-line-strong) !important;
+  color: var(--glass-muted) !important;
+  background: rgba(255, 255, 255, .035) !important;
+}
+
+.sp-sidebar-logout button:hover {
+  border-color: var(--glass-pink) !important;
+  color: #fff !important;
+  background: rgba(155, 108, 255, .13) !important;
+}
+
+.sp-card,
+.game-card,
+.stat-card,
+.page-header,
+.notif-panel,
+.modal,
+.panel,
+.summary-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, .095), rgba(255, 255, 255, .035)) !important;
+  border: 1px solid var(--glass-line) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(18px) saturate(130%) !important;
+}
+
+.sp-card-title,
+.page-title,
+.page-header h1,
+.section-title {
+  color: #fff !important;
+}
+
+.form-input,
+.sp-form-group input,
+.sp-form-group select,
+.sp-form-group textarea,
+textarea,
+select {
+  background: rgba(255, 255, 255, .06) !important;
+  border-color: var(--glass-line-strong) !important;
+  color: #fff !important;
+}
+
+.form-input:focus,
+.sp-form-group input:focus,
+.sp-form-group select:focus,
+.sp-form-group textarea:focus,
+textarea:focus,
+select:focus {
+  border-color: #d19cff !important;
+  box-shadow: 0 0 0 4px rgba(155, 108, 255, .12) !important;
+}
+
+.submit-btn,
+.send-btn,
+.btn-access,
+.btn-download,
+.btn-verify,
+.copy-btn {
+  background: linear-gradient(110deg, #7651ed, #c36fe8 58%, #f188d6) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 10px 26px rgba(135, 84, 238, .25) !important;
+}
+
+.nav-tab,
+.bn-item {
+  background: rgba(17, 11, 39, .80) !important;
+  border-color: var(--glass-line) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* Universal glass pass for every remaining PHP screen. */
+body:not(:has(.auth-shell)):not(:has(.register-card)):not(:has(.bottom-nav)) {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(123, 78, 255, .17), transparent 28%),
+    radial-gradient(circle at 88% 9%, rgba(232, 106, 255, .12), transparent 25%),
+    linear-gradient(145deg, #080617, #120a2a 62%, #1b0b32) !important;
+}
+
+.top-nav,
+.chat-topbar,
+.nav-home,
+.sp-topbar,
+.admin-topbar {
+  background: rgba(17, 11, 39, .78) !important;
+  border-color: var(--glass-line) !important;
+  box-shadow: 0 12px 35px rgba(3, 0, 15, .28) !important;
+  backdrop-filter: blur(22px) saturate(145%) !important;
+}
+
+.top-nav *,
+.chat-topbar *,
+.nav-home *,
+.admin-topbar * {
+  color: inherit;
+}
+
+.page-header,
+.detail-card,
+.order-card,
+.receipt-card,
+.steps-card,
+.settings-card,
+.form-card,
+.feedback-card,
+.buy-panel,
+.video-card,
+.featured-card,
+.tg-direct-card,
+.inbox-sidebar,
+.chat-panel,
+.modal-box,
+.apk-modal,
+.notif-panel,
+.proof-section,
+.buyer-info-section,
+.section-card,
+.form-section,
+.faq-item,
+.skeleton-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, .095), rgba(255, 255, 255, .035)) !important;
+  border: 1px solid var(--glass-line) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(18px) saturate(130%) !important;
+}
+
+.page-header,
+.settings-card,
+.form-card,
+.feedback-card,
+.detail-card,
+.receipt-card,
+.steps-card,
+.proof-section,
+.form-section {
+  border-radius: 20px !important;
+}
+
+.page-header h1,
+.page-title,
+.page-header .page-title,
+.form-card-title,
+.form-section-title,
+.card-title,
+.receipt-header,
+.order-card-label,
+.modal-title,
+.header-title,
+.nav-title {
+  color: #fff !important;
+}
+
+.page-sub,
+.form-card-sub,
+.header-sub,
+.modal-desc,
+.card-sub,
+.section-micro {
+  color: var(--glass-muted) !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+select,
+textarea,
+.math-input,
+.days-input,
+.key-input,
+.link-field,
+.comment-text-input,
+.comment-input,
+.inbox-search-bar input,
+.input-bar input {
+  background: rgba(255, 255, 255, .06) !important;
+  border: 1px solid var(--glass-line-strong) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+select:focus,
+textarea:focus,
+.math-input:focus,
+.days-input:focus,
+.key-input:focus,
+.link-field:focus,
+.comment-text-input:focus,
+.comment-input:focus,
+.inbox-search-bar input:focus,
+.input-bar input:focus {
+  border-color: #d19cff !important;
+  box-shadow: 0 0 0 4px rgba(155, 108, 255, .12) !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+.comment-input::placeholder,
+.comment-text-input::placeholder,
+.inbox-search-bar input::placeholder {
+  color: rgba(231, 221, 255, .43) !important;
+}
+
+.btn-verify,
+.refresh-btn,
+.btn-claim,
+.btn-download,
+.btn-open-modal,
+.btn-section,
+.btn-submit,
+.btn-save,
+.btn-continue,
+.btn-home,
+.btn-dl,
+.btn-apk-apply,
+.btn-tg,
+.send-comment-btn,
+.comment-send-btn,
+.btn-buy-now,
+.submit-btn,
+.send-btn {
+  background: linear-gradient(110deg, #7651ed, #c36fe8 58%, #f188d6) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 10px 26px rgba(135, 84, 238, .25) !important;
+}
+
+.btn-verify:hover,
+.btn-claim:hover,
+.btn-download:hover,
+.btn-submit:hover,
+.btn-save:hover,
+.btn-continue:hover,
+.btn-buy-now:hover,
+.submit-btn:hover,
+.send-btn:hover {
+  filter: brightness(1.09) !important;
+  box-shadow: 0 14px 34px rgba(179, 92, 244, .35) !important;
+}
+
+.back-btn,
+.btn-text,
+.btn-outline,
+.copy-btn,
+.refresh-btn,
+.change-photo-btn,
+.file-clear-btn,
+.btn-apk-cancel,
+.modal-btn-cancel,
+.wishlist-heart-btn {
+  background: rgba(255, 255, 255, .055) !important;
+  border-color: var(--glass-line-strong) !important;
+  color: #eee5ff !important;
+}
+
+.back-btn:hover,
+.btn-text:hover,
+.btn-outline:hover,
+.copy-btn:hover,
+.refresh-btn:hover,
+.change-photo-btn:hover,
+.wishlist-heart-btn:hover {
+  background: rgba(155, 108, 255, .14) !important;
+  border-color: #d19cff !important;
+  color: #fff !important;
+}
+
+.modal-overlay,
+.sidebar-overlay,
+.drawer-overlay {
+  background: rgba(4, 1, 16, .68) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.section-label,
+.top-label,
+.page-header-tag,
+.page-header-dot {
+  color: #dda1ff !important;
+}
+
+.success-icon-wrap,
+.icon-wrap,
+.shield-wrap,
+.sp-card-icon,
+.tg-card-icon {
+  background: linear-gradient(135deg, rgba(155, 108, 255, .28), rgba(237, 120, 255, .13)) !important;
+  border-color: rgba(217, 174, 255, .30) !important;
+  color: #e1b7ff !important;
+}
+
+@media (max-width: 640px) {
+  .auth-shell {
+    margin: 16px !important;
+    border-radius: 24px !important;
+  }
+
+  .brand-panel {
+    min-height: 280px !important;
+  }
+
+  .brand-copy h1 {
+    font-size: 29px !important;
+  }
+
+  .register-card {
+    margin: 16px !important;
+    padding: 34px 24px !important;
+  }
+}
