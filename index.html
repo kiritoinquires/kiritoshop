@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0C111A">
+  <meta name="description" content="Kirito Shop — digital products, game access, and services.">
+  <title>Kirito Shop — Sign in</title>
+  <link rel="canonical" href="https://harold.x10.mx/">
+  <link rel="icon" type="image/jpeg" href="https://harold.x10.mx/assets/anime-hero.jpg">
+  <link rel="apple-touch-icon" href="https://harold.x10.mx/assets/anime-hero.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kirito Shop">
+  <meta property="og:title" content="Kirito Shop">
+  <meta property="og:description" content="Digital products, game access, and services from Kirito Shop.">
+  <meta property="og:url" content="https://harold.x10.mx/">
+  <meta property="og:image" content="https://harold.x10.mx/assets/anime-hero.jpg">
+  <meta property="og:image:alt" content="Kirito Shop logo">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kirito Shop">
+  <meta name="twitter:description" content="Digital products, game access, and services from Kirito Shop.">
+  <meta name="twitter:image" content="https://harold.x10.mx/assets/anime-hero.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Kirito Shop","url":"https://harold.x10.mx/","logo":"https://harold.x10.mx/assets/anime-hero.jpg"}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --ink: #0C111A;
+      --ink2: #151D29;
+      --line-dark: #26313F;
+      --paper: #F8F6F2;
+      --paper-dim: #EFECE4;
+      --line-light: #DEDACE;
+      --gold: #C6A05A;
+      --gold-deep: #9C7B3D;
+      --text-dark: #1C2330;
+      --text-paper: #F3F1EC;
+      --muted-dark: #8996A6;
+      --muted-paper: #8B8677;
+      --success: #2E9E70;
+      --error: #B14B3E;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--ink);
+      color: var(--text-dark);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+
+    .auth-shell {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      max-width: 980px;
+      min-height: 600px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.45);
+      border: 1px solid var(--line-dark);
+    }
+
+    /* ---------- Brand panel ---------- */
+    .brand-panel {
+      flex: 1 1 42%;
+      position: relative;
+      background: radial-gradient(circle at 20% 15%, #1B2534 0%, var(--ink) 60%);
+      color: var(--text-paper);
+      padding: 44px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .brand-panel::before {
+      content: '';
+      position: absolute; inset: 0;
+      z-index: 1;
+      background-image:
+        repeating-linear-gradient(115deg, rgba(198,160,90,0.05) 0px, rgba(198,160,90,0.05) 1px, transparent 1px, transparent 34px);
+      pointer-events: none;
+    }
+
+    .brand-video {
+      position: absolute; inset: 0;
+      z-index: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.34;
+      filter: saturate(1.35) contrast(1.12);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .seal {
+      position: absolute;
+      right: -70px; bottom: -70px;
+      width: 280px; height: 280px;
+      opacity: 0.5;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .brand-mark {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .brand-mark-icon {
+      width: 38px; height: 38px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .brand-mark-text {
+      font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-paper);
+    }
+
+    .brand-copy {
+      position: relative; z-index: 2;
+      margin-top: 40px;
+    }
+
+    .brand-copy h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+
+    .brand-copy h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .brand-copy p {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: #B7BFCB;
+      max-width: 320px;
+    }
+
+    .trust-list {
+      position: relative; z-index: 2;
+      list-style: none;
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .trust-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: #9AA4B2;
+    }
+
+    .trust-list svg { flex-shrink: 0; color: var(--gold); }
+
+    /* ---------- Form panel ---------- */
+    .login-card {
+      flex: 1 1 58%;
+      background: var(--paper);
+      padding: 48px 46px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .form-inner { width: 100%; max-width: 360px; margin: 0 auto; }
+
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .step-indicator { display: flex; gap: 8px; margin-bottom: 26px; }
+
+    .step-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--line-light); transition: all 0.3s;
+    }
+    .step-dot.active { background: var(--gold); width: 20px; border-radius: 3px; }
+    .step-dot.done { background: var(--success); }
+
+    h1.step-title {
+      font-family: 'Fraunces', serif; font-size: 25px; font-weight: 600;
+      color: var(--text-dark); margin-bottom: 6px;
+    }
+
+    .subtitle { color: var(--muted-paper); font-size: 13.5px; margin-bottom: 26px; line-height: 1.5; }
+
+    .btn-google {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--line-light);
+      border-radius: 10px;
+      padding: 13px 18px;
+      color: var(--muted-paper);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 500;
+      cursor: not-allowed;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      opacity: 0.55;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 20px 0; color: var(--muted-paper); font-size: 12.5px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--line-light);
+    }
+
+    label {
+      display: block; font-size: 11.5px; font-weight: 600;
+      color: var(--muted-paper); margin-bottom: 7px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      background: var(--paper-dim);
+      border: 1px solid var(--line-light);
+      border-radius: 10px;
+      padding: 13px 15px;
+      color: var(--text-dark);
+      font-family: 'Inter', sans-serif;
+      font-size: 14.5px; outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 15px;
+    }
+    input:focus { border-color: var(--gold); background: #fff; }
+    input::placeholder { color: #ADA792; }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--ink);
+      border: none; border-radius: 10px;
+      padding: 14px; color: var(--text-paper);
+      font-family: 'Inter', sans-serif;
+      font-size: 14.5px; font-weight: 600;
+      cursor: pointer; letter-spacing: 0.01em;
+      transition: all 0.2s; margin-top: 2px;
+    }
+    .btn-primary:hover { background: var(--ink2); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+    .btn-back {
+      background: none; border: none;
+      color: var(--muted-paper); font-family: 'Inter', sans-serif;
+      font-size: 12.5px; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 18px; padding: 0;
+      transition: color 0.2s;
+    }
+    .btn-back:hover { color: var(--gold-deep); }
+
+    .code-inputs { display: flex; gap: 9px; margin-bottom: 15px; }
+    .code-inputs input {
+      text-align: center; font-size: 20px; font-weight: 600;
+      padding: 14px 6px; margin: 0; width: 46px;
+      font-family: 'Fraunces', serif;
+    }
+
+    .alert {
+      padding: 11px 15px; border-radius: 8px;
+      font-size: 12.5px; margin-bottom: 15px; display: none;
+      line-height: 1.4;
+    }
+    .alert.error { background: rgba(177,75,62,0.08); border: 1px solid rgba(177,75,62,0.25); color: var(--error); }
+    .alert.success { background: rgba(46,158,112,0.08); border: 1px solid rgba(46,158,112,0.25); color: var(--success); }
+    .alert.show { display: block; }
+
+    .resend-link { text-align: center; font-size: 12.5px; color: var(--muted-paper); margin-top: 12px; }
+    .resend-link a { color: var(--gold-deep); text-decoration: none; cursor: pointer; }
+    .resend-link a:hover { text-decoration: underline; }
+
+    .forgot-link {
+      display: block; text-align: right;
+      font-size: 12.5px; color: var(--gold-deep);
+      text-decoration: none; cursor: pointer;
+      margin-top: -8px; margin-bottom: 15px;
+    }
+    .forgot-link:hover { text-decoration: underline; }
+
+    .loading-spinner {
+      display: none; width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .password-wrapper { position: relative; }
+    .password-wrapper input { padding-right: 46px; }
+    .toggle-pw {
+      position: absolute; right: 13px; top: 13px;
+      cursor: pointer; color: var(--muted-paper);
+      background: none; border: none;
+    }
+
+    .timer { font-size: 12.5px; color: var(--gold-deep); text-align: center; margin-top: 6px; }
+
+    .btn-loading { display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .btn-loading .loading-spinner { display: block; }
+
+    .login-link {
+      text-align: center; font-size: 12.5px;
+      color: var(--muted-paper); margin-top: 22px;
+    }
+    .login-link a { color: var(--gold-deep); text-decoration: none; cursor: pointer; font-weight: 600; }
+    .login-link a:hover { text-decoration: underline; }
+
+    #dot4 { display: none; }
+
+    @media (max-width: 860px) {
+      .auth-shell { flex-direction: column; min-height: 0; }
+      .brand-panel { padding: 32px 30px; }
+      .brand-copy h1 { font-size: 26px; }
+      .trust-list { display: none; }
+      .login-card { padding: 36px 28px; }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/glass-theme.css">
+</head>
+
+<body>
+
+  <div class="auth-shell">
+    <aside class="brand-panel">
+      <video class="brand-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/featured-logo.mp4" type="video/mp4">
+      </video>
+      <svg class="seal" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="95" stroke="#C6A05A" stroke-width="1"/>
+        <circle cx="100" cy="100" r="80" stroke="#C6A05A" stroke-width="1"/>
+        <circle cx="100" cy="100" r="80" stroke="#C6A05A" stroke-width="1" stroke-dasharray="1 7"/>
+        <text x="100" y="112" text-anchor="middle" font-family="Fraunces, serif" font-size="34" fill="#C6A05A">SS</text>
+      </svg>
+
+      <div class="brand-mark">
+        <div class="brand-mark-icon">SS</div>
+        <div class="brand-mark-text">Kirito Shop</div>
+      </div>
+
+      <div class="brand-copy">
+        <h1>Trade smarter.<br><em>Spend safer.</em></h1>
+        <p>One wallet for buying, selling, and sending — built for members who value speed and a clean paper trail.</p>
+      </div>
+
+      <ul class="trust-list">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/></svg>Encrypted checkout, every order</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Instant wallet-to-wallet transfers</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4z"/><path d="M4 10h16v10H4z"/><path d="M9 14h6"/></svg>Verified sellers only</li>
+      </ul>
+    </aside>
+
+    <main class="login-card">
+      <div class="form-inner">
+
+        <div class="step-indicator">
+          <div class="step-dot active" id="dot1"></div>
+          <div class="step-dot" id="dot2"></div>
+          <div class="step-dot" id="dot3"></div>
+          <div class="step-dot" id="dot4"></div>
+        </div>
+
+        <div class="step active" id="step1">
+          <h1 class="step-title">Welcome back</h1>
+          <p class="subtitle">Sign in to your account to continue</p>
+
+          <button class="btn-google" id="googleBtn" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Continue with Google (Unavailable)
+          </button>
+
+          <div class="divider">or use email</div>
+
+          <label>Enter Email</label>
+          <input type="email" id="emailInput" placeholder="you@example.com" onkeydown="if(event.key==='Enter') proceedWithEmail()">
+          <div class="alert error" id="emailAlert"></div>
+          <button class="btn-primary" id="proceedBtn" onclick="proceedWithEmail()">Proceed</button>
+          <div class="login-link">Don't have an account? <a href="pages/register">Sign up</a></div>
+        </div>
+
+        <div class="step" id="step2">
+          <button class="btn-back" onclick="goToStep(1)">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back
+          </button>
+          <h1 class="step-title">Sign in</h1>
+          <p class="subtitle" id="loginEmailLabel">Signing in as you@example.com</p>
+
+          <label>Username</label>
+          <input type="text" id="usernameInput" placeholder="Enter your username" onkeydown="if(event.key==='Enter') document.getElementById('passwordLoginInput').focus()">
+
+          <label>Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="passwordLoginInput" placeholder="Enter your password" onkeydown="if(event.key==='Enter') completeLogin()">
+            <button class="toggle-pw" onclick="togglePw('passwordLoginInput')">
+              <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+          </div>
+
+          <a class="forgot-link" onclick="goToResetPassword()">Forgot password? Reset it</a>
+
+          <div class="alert error" id="loginAlert"></div>
+          <div class="alert success" id="loginSuccess"></div>
+          <button class="btn-primary" id="loginBtn" onclick="completeLogin()">Enter Kirito Shop</button>
+        </div>
+
+        <div class="step" id="step3">
+          <button class="btn-back" onclick="goToStep(2)">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back
+          </button>
+          <h1 class="step-title">Reset password</h1>
+          <p class="subtitle">We'll send a verification code to your email</p>
+
+          <div class="code-inputs">
+            <input type="text" maxlength="1" class="code-digit" oninput="moveToNext(this, 0)">
+            <input type="text" maxlength="1" class="code-digit" oninput="moveToNext(this, 1)">
+            <input type="text" maxlength="1" class="code-digit" oninput="moveToNext(this, 2)">
+            <input type="text" maxlength="1" class="code-digit" oninput="moveToNext(this, 3)">
+            <input type="text" maxlength="1" class="code-digit" oninput="moveToNext(this, 4)">
+            <input type="text" maxlength="1" class="code-digit" oninput="moveToNext(this, 5)">
+          </div>
+
+          <div class="timer" id="resetCodeTimer">—</div>
+          <div class="alert error" id="resetCodeAlert"></div>
+          <button class="btn-primary" id="sendResetBtn" onclick="sendResetCode()">Send verification code</button>
+          <div class="resend-link" id="resetResendRow" style="display:none;">Didn't get it? <a onclick="sendResetCode()">Resend code</a></div>
+        </div>
+
+        <div class="step" id="step4">
+          <h1 class="step-title">Set new password</h1>
+          <p class="subtitle">Create a new secure password for your account</p>
+
+          <label>New Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="newPasswordInput" placeholder="Min. 8 characters">
+            <button class="toggle-pw" onclick="togglePw('newPasswordInput')">
+              <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+          </div>
+
+          <label>Confirm New Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="confirmNewInput" placeholder="Repeat new password">
+            <button class="toggle-pw" onclick="togglePw('confirmNewInput')">
+              <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="alert error" id="newPwAlert"></div>
+          <div class="alert success" id="newPwSuccess"></div>
+          <button class="btn-primary" id="saveNewPwBtn" onclick="saveNewPassword()">Save new password</button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Local data SDKs -->
+  <script>
+  window.__Kirito_DATA__ = window.__Kirito_DATA__ || {};
+  window.__Kirito_DATA__.appConfig = {};</script>
+<script src="/assets/js/index.js" type="module"></script>
+  <script src="/assets/js/site-enhance.js" defer></script>
+</body>
+
+</html>
